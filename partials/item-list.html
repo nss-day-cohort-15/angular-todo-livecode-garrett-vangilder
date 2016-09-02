@@ -9,6 +9,7 @@
             <div class="col-xs-1">{{item.assignedTo}}</div>
             <div class="col-xs-1">
                 <button class="btn btn-danger" ng-click="itemDelete(item.id)">X</button>
+                <button class="btn btn-success"><a ng-href="#/items/edit/view/{{item.id}}">edit</a></button>
             </div>
         </div>
     </div>

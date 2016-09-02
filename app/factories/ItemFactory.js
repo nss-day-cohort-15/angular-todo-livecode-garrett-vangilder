@@ -41,10 +41,20 @@ app.factory("ItemStorage", ($q, $http, FirebaseURL) => {
       });
     };
 
+    let editItem = (itemId, editedItem) => {
+      return $q( (resolve, reject) => {
+        $http.put(`${FirebaseURL}/items/${itemId}.json`, JSON.stringify(editedItem))
+        .success( (ObjectFromFirebase) => {
+          resolve(ObjectFromFirebase);
+        });
+      });
+    };
+
     return {
         getItemList,
         postNewItem,
-        deleteItem
+        deleteItem,
+        editItem
     };
 
 });

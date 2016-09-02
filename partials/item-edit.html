@@ -1,0 +1,11 @@
+<h1>Item Edit</h1>
+
+<h2>Task:<input type="text" class="form-control" placeholder="{{selectedItem.task}}" ng-model="selectedItem.task" /></h2>
+<h2>Assigned To:<input type="text" class="form-control" placeholder="{{selectedItem.assignedTo}}" ng-model="selectedItem.assignedTo" /></h2>
+<h2>Due Date:<input type="text" class="form-control" placeholder="{{selectedItem.dueDate}}" ng-model="selectedItem.dueDate" /></h2>
+<h2>Dependencies:<input type="text" class="form-control" placeholder="{{selectedItem.dependencies}}" ng-model="selectedItem.dependencies" /></h2>
+<h2>Location:<input type="text" class="form-control" placeholder="{{selectedItem.location}}" ng-model="selectedItem.location" /></h2>
+<h2>Urgency:<input type="text" class="form-control" placeholder="{{selectedItem.urgency}}" ng-model="selectedItem.urgency" /></h2>
+<h2>Completed:<input type="text" class="form-control" placeholder="No" ng-model="selectedItem.isCompleted" /></h2>
+
+<button class="btn btn-success" ng-click=editTask(itemId)>Submit New Item</button>

@@ -18,5 +18,4 @@ app.controller("ItemNewCtrl", function($scope, ItemStorage, $location) {
                 $location.url("/items/list");
             });
     };
-
 });
