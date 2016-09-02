@@ -1,14 +1,18 @@
 "use strict";
 // THIS IS WHERE THE INTERACTION WITH DATA HAPPENS
 
-app.factory("ItemStorage", ($q, $http) => {
+app.factory("ItemStorage", ($q, $http, FirebaseURL) => {
 
     let getItemList = () => {
         let items = [];
         return $q((resolve, reject) => {
-            $http.get("../../data/itemList.json")
+            $http.get(`${FirebaseURL}/items.json`)
                 .success((itemObject) => {
-                    resolve(itemObject);
+                  Object.keys(itemObject).forEach((key) => {
+                    itemObject[key].id = key;
+                    items.push(itemObject[key]);
+                  })
+                    resolve(items);
                 })
                 .error((error) => {
                     reject(error);
@@ -16,6 +20,21 @@ app.factory("ItemStorage", ($q, $http) => {
         });
     };
 
-    return {getItemList};
+    let postNewItem = (newItem) => {
+        return $q((resolve, reject) => {
+            $http.post(`${FirebaseURL}/items.json`, JSON.stringify(newItem))
+                .success((ObjectFromFirebase) => {
+                    resolve(ObjectFromFirebase);
+                })
+                .error((error) => {
+                    reject(error);
+                });
+        });
+    };
+
+    return {
+        getItemList,
+        postNewItem
+    };
 
 });
