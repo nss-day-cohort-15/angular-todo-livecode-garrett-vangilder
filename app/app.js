@@ -13,5 +13,9 @@ app.config(function($routeProvider) {
         templateUrl: 'partials/item-form.html',
         controller: 'ItemNewCtrl'
     }).
+    when("/items/view/:itemId", {
+        templateUrl: "partials/item-details.html",
+        controller: "ItemViewCtrl"
+    }).
     otherwise('/items/list');
 });

@@ -11,7 +11,7 @@ app.factory("ItemStorage", ($q, $http, FirebaseURL) => {
                   Object.keys(itemObject).forEach((key) => {
                     itemObject[key].id = key;
                     items.push(itemObject[key]);
-                  })
+                  });
                     resolve(items);
                 })
                 .error((error) => {
@@ -32,9 +32,19 @@ app.factory("ItemStorage", ($q, $http, FirebaseURL) => {
         });
     };
 
+    let deleteItem = (itemId) => {
+      return $q( (resolve, reject) => {
+        $http.delete( `${FirebaseURL}/items/${itemId}.json`)
+        .success( (ObjectFromFirebase) => {
+          resolve(ObjectFromFirebase);
+        });
+      });
+    };
+
     return {
         getItemList,
-        postNewItem
+        postNewItem,
+        deleteItem
     };
 
 });
