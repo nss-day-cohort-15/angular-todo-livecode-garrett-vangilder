@@ -1,4 +1,5 @@
 lib/bower_components
 lib/node_modules
 css/
-sass_cache 
+lib/.sass_cache
+app/values/fb-creds.js

@@ -3,10 +3,10 @@
 
 app.factory("ItemStorage", ($q, $http, FirebaseURL) => {
 
-    let getItemList = () => {
+    let getItemList = (user) => {
         let items = [];
         return $q((resolve, reject) => {
-            $http.get(`${FirebaseURL}/items.json`)
+            $http.get(`${FirebaseURL}/items.json?orderBy="uid"&equalTo="${user}"`)
                 .success((itemObject) => {
                   Object.keys(itemObject).forEach((key) => {
                     itemObject[key].id = key;
@@ -18,6 +18,18 @@ app.factory("ItemStorage", ($q, $http, FirebaseURL) => {
                     reject(error);
                 });
         });
+    };
+
+    let getSingleItem = (itemId) => {
+      return $q( (resolve, reject) => {
+        $http.get(`${FirebaseURL}/items/${itemId}.json`)
+        .success( (itemObj) => {
+          resolve(itemObj);
+        })
+        .error( (error) => {
+          reject(error);
+        });
+      });
     };
 
     let postNewItem = (newItem) => {
@@ -41,20 +53,33 @@ app.factory("ItemStorage", ($q, $http, FirebaseURL) => {
       });
     };
 
-    let editItem = (itemId, editedItem) => {
+    let updateItem = (itemId, editedItem) => {
       return $q( (resolve, reject) => {
-        $http.put(`${FirebaseURL}/items/${itemId}.json`, JSON.stringify(editedItem))
+        $http.patch(`${FirebaseURL}/items/${itemId}.json`, JSON.stringify(editedItem))
         .success( (ObjectFromFirebase) => {
           resolve(ObjectFromFirebase);
+        })
+        .error( (error) => {
+          reject(error);
         });
       });
     };
+
+    // let editItem = (itemId, editedItem) => {
+    //   return $q( (resolve, reject) => {
+    //     $http.put(`${FirebaseURL}/items/${itemId}.json`, JSON.stringify(editedItem))
+    //     .success( (ObjectFromFirebase) => {
+    //       resolve(ObjectFromFirebase);
+    //     });
+    //   });
+    // };
 
     return {
         getItemList,
         postNewItem,
         deleteItem,
-        editItem
+        updateItem,
+        getSingleItem
     };
 
 });
